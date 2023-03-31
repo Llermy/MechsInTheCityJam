@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class BuildingBlock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float height;
 
-    // Update is called once per frame
-    void Update()
+    [Header("Fall properties")]
+    [Range(0.1f, 5f)]
+    public float fallTime = 1.0f;
+
+    [Header("Destroy properties")]
+    public ParticleSystem explosionPS;
+    public float explosionScale = 1.0f;
+
+    // Make the floor fall down some distance (normally because one floor below has been destroyed)
+    public void SlideDown(float distance)
     {
-        
+        float targetHeight = transform.position.y - distance;
+        transform.LeanMoveY(targetHeight, fallTime).setEaseInExpo();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -22,6 +27,16 @@ public class BuildingBlock : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
+
+            ParticleSystem explosion = Instantiate(explosionPS, this.transform.position, Quaternion.identity);
+            explosion.transform.localScale *= explosionScale;
+            //explosionPS.Play();
+
+            Building parentBuilding = GetComponentInParent<Building>();
+            if(parentBuilding)
+            {
+                parentBuilding.OnFloorDestroy(this);
+            }
         }
     }
 }
