@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    RewardSpawner rewardSpawner;
+
+    private void Start()
+    {
+        rewardSpawner = GameObject.Find("GameManager").GetComponent<RewardSpawner>();
+    }
+
     public void OnFloorDestroy(BuildingBlock destroyedFloor)
     {
         float currentHeight = transform.position.y;
@@ -19,5 +26,7 @@ public class Building : MonoBehaviour
             }
             currentHeight += floors[i].height;
         }
+
+        rewardSpawner.DispatchTry(destroyedFloor.transform.position + new Vector3(0, destroyedFloor.height / 2, 0));
     }
 }
