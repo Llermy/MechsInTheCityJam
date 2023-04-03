@@ -12,6 +12,7 @@ public class BuildingBlock : MonoBehaviour
 
     [Header("Destroy properties")]
     public ParticleSystem explosionPS;
+    public GameObject explosionPrefab;
     public float explosionScale = 1.0f;
 
     // Make the floor fall down some distance (normally because one floor below has been destroyed)
@@ -31,6 +32,9 @@ public class BuildingBlock : MonoBehaviour
             ParticleSystem explosion = Instantiate(explosionPS, this.transform.position, Quaternion.identity);
             explosion.transform.localScale *= explosionScale;
             //explosionPS.Play();
+
+            GameObject explosionObject = Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+            //explosionObject.GetComponentInChildren<AudioSource>
 
             Building parentBuilding = GetComponentInParent<Building>();
             if(parentBuilding)

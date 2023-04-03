@@ -129,6 +129,7 @@ MonoBehaviour:
   height: 3
   fallTime: 1
   explosionPS: {fileID: 2433282508523890284, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
+  explosionPrefab: {fileID: 463800348611031414, guid: 38d95eb56900ee749aa5e292f6380d02, type: 3}
   explosionScale: 1
 --- !u!65 &1016558770395881287
 BoxCollider:
