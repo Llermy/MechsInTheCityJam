@@ -7,13 +7,22 @@ public class BuildingConstructor : MonoBehaviour
 {
     public int numberOfFloors;
     public GameObject floorObject;
+    public Material baseMaterial;
+    public Material groundFloorMaterial;
+    public Material roofMaterial;
 
-    //private GameObject[] floors;
+    private void Start()
+    {
+        Construct();
+    }
 
     private void OnValidate()
     {
-        Debug.Log("Constructing building with " + numberOfFloors + " floors.");
+        Construct();
+    }
 
+    public void Construct()
+    {
         BuildingBlock[] oldFloors = GetComponentsInChildren<BuildingBlock>();
         foreach(BuildingBlock curFloor in oldFloors)
         {
@@ -25,6 +34,20 @@ public class BuildingConstructor : MonoBehaviour
         {
             GameObject newFloor = Instantiate(floorObject, this.transform);
             newFloor.transform.localPosition = new Vector3(0, i*floorHeight, 0);
+            newFloor.GetComponent<BuildingBlock>().SetMaterial(baseMaterial);
+
+            if(i == numberOfFloors-1)
+            {
+                newFloor.GetComponent<BuildingBlock>().SetMaterial(roofMaterial);
+            }
+            else if(i == 0)
+            {
+                newFloor.GetComponent<BuildingBlock>().SetMaterial(groundFloorMaterial);
+            }
+            else
+            {
+                newFloor.GetComponent<BuildingBlock>().SetMaterial(baseMaterial);
+            }
         }
     }
 

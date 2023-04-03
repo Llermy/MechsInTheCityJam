@@ -39,4 +39,12 @@ public class BuildingBlock : MonoBehaviour
             }
         }
     }
+
+    public void SetMaterial(Material mat)
+    {
+        foreach(MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>())
+        {
+            renderer.material = mat;
+        }
+    }
 }
