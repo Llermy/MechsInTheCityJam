@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileShooter : MonoBehaviour
 {
     public GameObject projectilePrefab;
+    public Animator animator;
 
     [Header("References")]
     public Transform shootingMouth;
@@ -15,6 +16,10 @@ public class ProjectileShooter : MonoBehaviour
     public float timeBetweenShooting = 0.5f;
 
     private bool shootingAvailable;
+
+    public delegate void Attack();
+    public static event Attack OnAttack;
+    public static event Attack OnAttackEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +48,16 @@ public class ProjectileShooter : MonoBehaviour
                 ray.direction.y,
                 shootingMouth.transform.forward.z);
 
+            if (animator)
+                animator.SetTrigger("Attack");
+
             // Shoot projectile
             GameObject projectile = Instantiate(projectilePrefab, shootingMouth.position, Quaternion.identity);
             projectile.transform.forward = shootDirection;
             projectile.GetComponent<Rigidbody>().AddForce(shootDirection * shootForce, ForceMode.Impulse);
             //projectile.GetComponent<Rigidbody>().AddForce(Vector3.up);
 
+            OnAttack();
             Invoke("ResetShooting", timeBetweenShooting);
         }
     }
@@ -56,6 +65,7 @@ public class ProjectileShooter : MonoBehaviour
     public void ResetShooting()
     {
         EnableShooting(true);
+        OnAttackEnd();
     }
 
     public void EnableShooting(bool enable)
