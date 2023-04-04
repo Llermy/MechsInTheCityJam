@@ -23,11 +23,18 @@ public class CountChanger : MonoBehaviour
         gameObject.LeanCancel();
         transform.localScale = originalScale * animationScale;
         transform.LeanScale(originalScale, 0.2f);
+
+        currentCount = newCount;
     }
 
     public void IncrementCount()
     {
         currentCount++;
         SetCount(currentCount);
+    }
+
+    public int GetCount()
+    {
+        return currentCount;
     }
 }

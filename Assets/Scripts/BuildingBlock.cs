@@ -41,6 +41,8 @@ public class BuildingBlock : MonoBehaviour
             {
                 parentBuilding.OnFloorDestroy(this);
             }
+
+            GameObject.Find("GameCanvas/FloorCounter/Text").GetComponent<CountChanger>().IncrementCount();
         }
     }
 

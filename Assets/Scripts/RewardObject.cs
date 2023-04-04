@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RewardObject : MonoBehaviour
 {
+    public float energyBoost = 0.7f;
+
     [Header("Animation")]
     [Range(0.01f, 5f)]
     public float rotationTime = 0.5f;
@@ -34,6 +36,6 @@ public class RewardObject : MonoBehaviour
     public void OnArrivePlayer()
     {
         destroy = true;
-        GameObject.Find("GameCanvas/CoinCounter/Text").GetComponent<CountChanger>().IncrementCount();
+        GameObject.Find("GameCanvas/EnergySlider").GetComponent<EnergySlide>().GiveBoost(energyBoost);
     }
 }

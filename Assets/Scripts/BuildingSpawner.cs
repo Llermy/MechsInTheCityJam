@@ -13,10 +13,20 @@ public class BuildingSpawner : MonoBehaviour
 
     void Start()
     {
+        SpawnTerrain();
+    }
+
+    public void SpawnTerrain()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         float currentLineY = -spawnRange.y;
         float currentX = -spawnRange.x + GetRandomDistance() / 2;
 
-        while(currentLineY < spawnRange.y - minDistanceInBetween)
+        while (currentLineY < spawnRange.y - minDistanceInBetween)
         {
             SpawnBuilding(new Vector3(
                 currentX,
@@ -25,7 +35,7 @@ public class BuildingSpawner : MonoBehaviour
                 ));
 
             currentX += GetRandomDistance();
-            if(currentX > spawnRange.x - minDistanceInBetween)
+            if (currentX > spawnRange.x - minDistanceInBetween)
             {
                 currentX = -spawnRange.x + GetRandomDistance() / 2;
                 currentLineY += GetRandomDistance();
